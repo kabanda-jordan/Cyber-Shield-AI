@@ -1,85 +1,488 @@
-# Emerald Wallet | RFID Ecosystem (Production)
+# CyberShield AI - Cyber Defense System
 
-This project is a high-performance RFID card top-up ecosystem. It features a NodeMCU Emerald Hub (Edge), a Remote Node.js API Bridge, and a real-time Web Dashboard.
+Welcome to **CyberShield AI**, a comprehensive cybersecurity framework featuring machine learning-powered threat detection, network monitoring, and incident response capabilities.
 
-## 🚀 Live Production URL
-**Dashboard:** [http://157.173.101.159:9242/wallet.html](http://157.173.101.159:9242/wallet.html)
+## 🛡️ Core Features
 
-## System Architecture
+### 1. **AI-Powered Threat Detection**
+- **Anomaly Detection**: Isolation Forest algorithm detects unusual security patterns
+- **Intrusion Detection**: Random Forest classifier identifies attack signatures
+- **Threat Classification**: Multi-level severity assessment (Safe → Critical)
+- **Real-time Analysis**: Immediate threat evaluation with confidence scoring
 
-1.  **Emerald Hub (NodeMCU ESP8266):** Scans RFID cards and tracks balances in a local memory array. It communicates via **MQTT** using the public broker `157.173.101.159`.
-2.  **Backend Bridge (Node.js):** Hosted on a remote server. It bridges MQTT events to the Web Dashboard via **WebSockets** and provides a REST API for top-ups.
-3.  **Web Dashboard:** A premium, real-time UI built with Tailwind CSS for monitoring scans and managing liquidity.
+### 2. **Network Security Monitoring**
+- **DDoS Detection**: Volumetric and flood attack identification
+- **Port Scan Detection**: Identifies reconnaissance activity
+- **Brute Force Detection**: Login attempt anomaly tracking
+- **Traffic Analysis**: Real-time bandwidth and connection monitoring
 
-## Project Structure
+### 3. **Password Security**
+- **Strength Analysis**: Entropy calculation and weakness detection
+- **Dictionary Matching**: Identifies common weak passwords
+- **Scoring System**: 0-6 comprehensive strength rating
 
--   `firmware/`: C++ Arduino code for the ESP8266.
-    -   `firmware.ino`: Main logic for WiFi, MQTT, and memory-based balance tracking.
--   `server.js`: Node.js backend logic (deployed remotely).
--   `wallet.html`: Frontend dashboard (served by the backend).
+### 4. **Web Dashboard**
+- **Real-time Monitoring**: Live threat visualization
+- **Event Logging**: Complete security event history
+- **Emergency Controls**: Lockdown capability for critical situations
+- **Custom Analysis**: On-demand security scanning
 
-## Technical Specifications
+---
 
--   **WiFi Networking:** Connects via `EdNet` (WPA2).
--   **MQTT Broker:** Public Cloud IP `157.173.101.159` on Port `1883`.
--   **Balance Logic:** Memory-based (RAM). *Note: Balances reset if the hub is powered off.*
--   **Identity Protection:** Unique Client IDs generated using ESP Chip ID to prevent hotspot collisions.
+## 📋 Installation & Setup
 
-## Hardware Wiring (NodeMCU to MFRC522)
+### Prerequisites
+- Python 3.8 or higher
+- pip package manager
+- 2GB RAM minimum
+- Network access for external threat intelligence updates
 
-| RC522 Pin | NodeMCU Pin |
-| :--- | :--- |
-| SDA (SS) | D2 |
-| SCK | D5 |
-| MOSI | D7 |
-| MISO | D6 |
-| RST | D1 |
-| 3.3V | 3V3 |
+### Step 1: Install Dependencies
 
-## Deployment Guide
-
-### Hardware
-1.  Open `firmware/firmware.ino` in Arduino IDE.
-2.  Install `PubSubClient`, `MFRC522`, and `ArduinoJson` libraries.
-3.  Upload to your NodeMCU ESP8266.
-4.  Open Serial Monitor (115200 baud) and confirm `[DEBUG] MQTT Connected!`.
-
-### Git Workflow
-To push updates to GitHub:
 ```bash
-git add .
-git commit -m "Update: Production deployment config"
-git push origin main
+cd cyberDefense
+pip install -r requirements.txt
 ```
 
-## Team Member Customization (Forking)
+**Dependencies installed:**
+- numpy, pandas - Data processing
+- scikit-learn - Machine learning models
+- tensorflow/keras - Deep learning
+- Flask - Web framework
+- Scapy - Network packet analysis
+- psutil - System monitoring
+- cryptography - Security operations
 
-If you are a member of **THE ROCK** and want to deploy this for yourself on your own server/GitHub, change these specific lines:
+### Step 2: Configure Environment (Optional)
 
-### 1. Firmware (`firmware/firmware.ino`)
--   **Line 8:** `TEAM_ID = "your_unique_name"` (Change this so you don't receive other people's scans!)
--   **Line 9 & 10:** Update `WIFI_SSID` and `WIFI_PASSWORD` for your local network.
--   **Line 11:** `MQTT_BROKER = "your_server_ip"` (The IP of your own cloud server).
+Create `.env` file in the project root:
+```
+THREAT_THRESHOLD=50
+API_KEY=your_api_key_here
+LOG_LEVEL=INFO
+```
 
-### 2. Backend (`server.js`)
--   **Line 13:** `const MQTT_BROKER = 'your_server_ip';`
--   **Line 91:** `const PORT = your_port_number;`
--   **Line 92:** `server.listen(PORT, 'your_server_ip', ...)`
+---
 
-### 3. Dashboard (`wallet.html`)
--   **Line 268:** `const BACKEND_URL = "http://your_server_ip:your_port";`
+## 🚀 Quick Start
 
-### 4. GitHub
-1.  Fork this repository or create a new one.
-2.  Update the **Live Production URL** at the top of this `README.md` to point to your link.
-3.  Commit and Push:
-    ```bash
-    git commit -m "Identity: Switched to [Your Name] infrastructure"
-    git push origin main
-    ```
+### Method 1: Web Dashboard
 
-## Features
--   ✅ Real-time "Emerald Stream" balance updates.
--   ✅ Unique Team Identity (`the_rock`).
--   ✅ High-visibility debug logging.
--   ✅ Premium Glassmorphism UI."# RFID-PAYMENT-SYSTEM" 
+```bash
+python dashboard.py
+```
+
+Then open **http://localhost:5000** in your browser.
+
+**Dashboard Features:**
+- 🎯 Real-time threat level display
+- 📊 System health and performance metrics
+- 📝 Live security event log
+- 🔐 Password strength analyzer
+- 🔒 Emergency lockdown button
+- 📈 Threat statistics and trends
+
+### Method 2: Command Line Usage
+
+```python
+from cyber_shield import CyberShield
+
+# Initialize the system
+shield = CyberShield("MyShield")
+
+# Analyze a security event
+event = {
+    'source_ip': '192.168.1.100',
+    'destination_ip': '10.0.0.1',
+    'port': 443,
+    'payload': 'GET / HTTP/1.1',
+    'protocol': 'TCP',
+    'payload_size': 256,
+    'flag_count': 2,
+    'duration': 120,
+    'src_bytes': 1024,
+    'dst_bytes': 2048,
+}
+
+result = shield.analyze_security_event(event)
+print(f"Threat Level: {result['threat_level']}")
+print(f"Threat Score: {result['threat_score']}")
+
+# Generate report
+report = shield.generate_security_report()
+print(report)
+```
+
+### Method 3: Network Monitoring
+
+```python
+from network_monitor import NetworkSecurityMonitor, NetworkPacket
+
+monitor = NetworkSecurityMonitor()
+
+# Simulate network traffic
+packet = NetworkPacket(
+    timestamp=time.time(),
+    source_ip='192.168.1.100',
+    dest_ip='8.8.8.8',
+    source_port=54321,
+    dest_port=53,
+    protocol='UDP',
+    size=128,
+    flags=0
+)
+
+# Analyze packet
+alerts = monitor.analyze_packet(packet)
+for alert in alerts:
+    print(f"ALERT: {alert}")
+```
+
+---
+
+## 🔬 ML Model Training
+
+The system comes with pre-trained models, but you can train on custom datasets:
+
+```python
+from cyber_shield import CyberShield
+import pandas as pd
+
+shield = CyberShield("CustomShield")
+
+# Load your security event dataset
+dataset = pd.read_csv('security_events.csv')
+
+# Train all models
+shield.train_on_dataset(dataset)
+
+# Save trained models (optional)
+import pickle
+with open('trained_models.pkl', 'wb') as f:
+    pickle.dump(shield, f)
+```
+
+**Required CSV columns:**
+- protocol, src_bytes, dst_bytes, duration
+- payload_size, flag_count, port
+- anomaly_label (0=normal, 1=anomaly)
+
+---
+
+## 📊 API Reference
+
+### REST Endpoints (when dashboard.py is running)
+
+#### Get System Status
+```
+GET /api/status
+```
+Response:
+```json
+{
+  "shield_name": "CyberShield AI",
+  "status": "ACTIVE",
+  "health": 98,
+  "threat_level": "SAFE",
+  "threat_score": 0,
+  "statistics": {
+    "threats_detected": 0,
+    "attacks_blocked": 0,
+    "anomalies_detected": 0
+  }
+}
+```
+
+#### Analyze Security Event
+```
+POST /api/analyze
+```
+Response:
+```json
+{
+  "threat_level": "SAFE",
+  "threat_score": 12,
+  "anomaly_score": 0.05,
+  "attack_probability": 0.01,
+  "timestamp": "2024-01-15T10:30:45"
+}
+```
+
+#### Check Password Strength
+```
+POST /api/check-password
+Content-Type: application/json
+
+{
+  "password": "MyP@ssw0rd123!"
+}
+```
+Response:
+```json
+{
+  "strength": "STRONG",
+  "score": 5,
+  "entropy": 45.2,
+  "feedback": [
+    "Include special characters in more places"
+  ]
+}
+```
+
+#### Get Security Report
+```
+GET /api/report
+```
+
+#### Emergency Lockdown
+```
+POST /api/lockdown
+```
+
+---
+
+## 🎯 Use Cases
+
+### 1. Enterprise Network Security
+- Deploy on perimeter servers
+- Monitor incoming traffic in real-time
+- Automatic threat response and blocking
+- Compliance reporting (PCI-DSS, HIPAA)
+
+### 2. Intrusion Detection System (IDS)
+```
+python network_monitor.py
+# Analyzes network traffic for suspicious patterns
+# Logs and alerts on detected attacks
+```
+
+### 3. Password Policy Enforcement
+```python
+shield.check_password_strength("UserPassword123!")
+# Returns strength assessment and improvement suggestions
+```
+
+### 4. Security Event Analysis
+- Extract security events from SIEM systems
+- Feed into CyberShield for intelligent analysis
+- Generate automated incident reports
+
+---
+
+## 🔒 Security Best Practices
+
+### 1. Run in Isolated Environment
+```bash
+python -m venv cyber_env
+source cyber_env/bin/activate  # Linux/Mac
+# or
+cyber_env\Scripts\activate  # Windows
+```
+
+### 2. Restrict Dashboard Access
+Update dashboard.py:
+```python
+app.run(host='127.0.0.1', port=5000)  # Local only
+# or add authentication
+```
+
+### 3. Enable Logging
+```python
+import logging
+logging.basicConfig(
+    filename='security.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+```
+
+### 4. Regular Model Updates
+- Retrain models monthly with new security data
+- Update threat signatures from threat intelligence feeds
+- Monitor system performance metrics
+
+---
+
+## 🧪 Testing
+
+### Run Example Analysis
+```python
+from cyber_shield import CyberShield
+
+shield = CyberShield("TestShield")
+
+# Test normal traffic
+normal_event = {
+    'source_ip': '192.168.1.100',
+    'destination_ip': '8.8.8.8',
+    'port': 443,
+    'payload': 'normal https traffic',
+    'protocol': 'TCP',
+    'payload_size': 256,
+    'flag_count': 2,
+    'duration': 120,
+    'src_bytes': 1024,
+    'dst_bytes': 2048,
+}
+
+result = shield.analyze_security_event(normal_event)
+assert result['threat_level'] == 'SAFE'
+
+# Test suspicious traffic
+suspicious_event = {
+    'source_ip': '203.0.113.45',
+    'destination_ip': '10.0.0.1',
+    'port': 22,
+    'payload': "' OR '1'='1",  # SQL injection attempt
+    'protocol': 'TCP',
+    'payload_size': 8192,
+    'flag_count': 16,
+    'duration': 0,
+    'src_bytes': 65536,
+    'dst_bytes': 32,
+}
+
+result = shield.analyze_security_event(suspicious_event)
+assert result['threat_level'] in ['HIGH', 'CRITICAL']
+```
+
+---
+
+## 📈 Performance Tuning
+
+### Optimize for Speed
+```python
+# Use smaller batch sizes for real-time processing
+# Reduce feature set for faster inference
+# Consider GPU acceleration: pip install tensorflow-gpu
+```
+
+### Optimize for Accuracy
+```python
+# Retrain models more frequently
+# Increase training dataset size
+# Ensemble multiple models
+```
+
+---
+
+## 🆘 Troubleshooting
+
+### Issue: Models take too long to train
+**Solution**: Use a smaller dataset or GPU acceleration
+```bash
+pip install tensorflow-gpu
+```
+
+### Issue: High false positive rate
+**Solution**: Adjust threat threshold in configuration
+```python
+shield.threat_threshold = 45  # Lower sensitivity
+```
+
+### Issue: Dashboard not accessible
+**Solution**: Check firewall and Flask configuration
+```bash
+# Run on public IP (careful with security!)
+python dashboard.py  # Change host='0.0.0.0'
+```
+
+### Issue: Memory issues with large datasets
+**Solution**: Process data in chunks
+```python
+for chunk in pd.read_csv('large_file.csv', chunksize=10000):
+    shield.train_on_dataset(chunk)
+```
+
+---
+
+## 📋 Architecture Overview
+
+```
+CyberShield AI System
+│
+├─ ThreatDatabase
+│  ├─ Malware Signatures
+│  ├─ Suspicious Ports
+│  ├─ Malicious Patterns
+│  └─ IP Reputation
+│
+├─ AnomalyDetector (ML)
+│  ├─ Isolation Forest
+│  ├─ Pattern Recognition
+│  └─ Statistical Analysis
+│
+├─ IntrusionDetectionSystem (ML)
+│  ├─ Random Forest Classifier
+│  ├─ Feature Extraction
+│  └─ Attack Prediction
+│
+├─ PasswordAnalyzer
+│  ├─ Entropy Calculation
+│  ├─ Dictionary Checking
+│  └─ Strength Scoring
+│
+├─ NetworkSecurityMonitor
+│  ├─ DDoS Detector
+│  ├─ PortScan Detector
+│  ├─ BruteForce Detector
+│  └─ Traffic Analyzer
+│
+└─ Web Dashboard (Flask)
+   ├─ REST API
+   ├─ Real-time Visualization
+   ├─ Event Logging
+   └─ Control Interface
+```
+
+---
+
+## 📚 File Structure
+
+```
+cyberDefense/
+├── cyber_shield.py          # Main threat detection engine
+├── network_monitor.py       # Network security monitoring
+├── dashboard.py             # Web dashboard & API
+├── requirements.txt         # Python dependencies
+└── README.md               # This file
+```
+
+---
+
+## 🔐 Compliance & Standards
+
+- **NIST Cybersecurity Framework**: Identify, Protect, Detect, Respond, Recover
+- **CIS Controls**: Implementation of critical security controls
+- **ISO 27001**: Information security management principles
+- **OWASP Top 10**: Web application security focus
+
+---
+
+## 📞 Support & Contributing
+
+For issues, questions, or contributions:
+1. Check this README for common issues
+2. Review code comments for detailed explanations
+3. Test with provided example datasets
+
+---
+
+## 📄 License
+
+This cybersecurity framework is provided as-is for defensive purposes. Ensure compliance with relevant laws and regulations in your jurisdiction.
+
+---
+
+## 🎓 Learning Resources
+
+- **Machine Learning**: scikit-learn documentation
+- **Network Security**: Scapy packet manipulation guide
+- **Web Security**: OWASP security guidelines
+- **Cryptography**: Python cryptography.io
+
+---
+
+**CyberShield AI v1.0** - Enterprise-Grade Threat Detection
+*Defense Through Intelligence* 🛡️
+
