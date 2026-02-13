@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emerald Wallet | Digital Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --emerald-primary: #10b981;
+      --emerald-dark: #064e3b;
+      --emerald-deep: #022c22;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--emerald-deep);
+      color: #ecfdf5;
+      overflow-x: hidden;
+    }
+
+    .glass {
+      background: rgba(6, 78, 59, 0.4);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .vault-card {
+      background: linear-gradient(165deg, #065f46 0%, #064e3b 100%);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .emerald-gradient {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(16, 185, 129, 0.2);
+      border-radius: 10px;
+    }
+
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+      }
+    }
+
+    .glow-orb {
+      filter: blur(60px);
+      animation: pulse-glow 8s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen transition-colors duration-500">
+
+  <div class="flex flex-col lg:flex-row min-h-screen relative overflow-hidden">
+    <!-- Background Decor -->
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/10 glow-orb rounded-full"></div>
+    <div class="absolute top-1/2 -right-24 w-64 h-64 bg-emerald-400/5 glow-orb rounded-full"></div>
+
+    <!-- Sidebar / Nav -->
+    <aside class="lg:w-80 glass lg:h-screen sticky top-0 z-40 p-8 border-r border-emerald-900/50 flex flex-col">
+      <div class="flex items-center gap-3 mb-12">
+        <div
+          class="w-12 h-12 emerald-gradient rounded-2xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/40">
+          <i class="fas fa-gem text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-xl tracking-tight text-emerald-400">EMERALD</h1>
+          <p class="text-[10px] font-bold text-emerald-500 tracking-[0.3em] uppercase opacity-80">Wallet Hub</p>
+        </div>
+      </div>
+
+      <nav class="space-y-2 flex-grow">
+        <div class="bg-emerald-500/10 text-emerald-400 p-4 rounded-2xl flex items-center gap-4 cursor-pointer">
+          <i class="fas fa-th-large"></i>
+          <span class="font-bold">Dashboard</span>
+        </div>
+        <div
+          class="text-emerald-700/50 p-4 rounded-2xl flex items-center gap-4 hover:bg-emerald-500/5 transition group">
+          <i class="fas fa-history group-hover:text-emerald-500 transition-colors"></i>
+          <span class="font-semibold group-hover:text-emerald-300 transition-colors">Transactions</span>
+        </div>
+        <div
+          class="text-emerald-700/50 p-4 rounded-2xl flex items-center gap-4 hover:bg-emerald-500/5 transition group">
+          <i class="fas fa-cog group-hover:text-emerald-500 transition-colors"></i>
+          <span class="font-semibold group-hover:text-emerald-300 transition-colors">Settings</span>
+        </div>
+      </nav>
+
+      <div class="mt-auto space-y-6">
+        <!-- Virtual Card Status -->
+        <div
+          class="bg-emerald-950 p-6 rounded-3xl relative overflow-hidden group shadow-2xl border border-emerald-900/30">
+          <div
+            class="absolute -right-4 -bottom-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/30 transition-all duration-700">
+          </div>
+          <p class="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-4">Active Session</p>
+          <div class="space-y-1 relative z-10">
+            <p id="currentUid" class="text-sm font-mono text-emerald-100 opacity-60">Scanning...</p>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
+              <p class="text-[10px] text-emerald-500 font-black">RFID HUB CONNECTED</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="flex-grow p-6 lg:p-12 relative z-10">
+      <div class="max-w-6xl mx-auto space-y-10">
+
+        <!-- Top Section -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <h2 class="text-3xl font-black text-white">Salutations, The Rock</h2>
+            <p class="text-emerald-400/60 font-medium">Your digital emerald assets are secured.</p>
+          </div>
+          <div id="feedback" class="hidden px-6 py-3 rounded-2xl font-bold text-sm animate-fade-in shadow-2xl"></div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+
+          <!-- Balance Display (The Redeisgned Card) -->
+          <div class="xl:col-span-2 space-y-8">
+            <div
+              class="vault-card rounded-[48px] p-12 relative overflow-hidden group min-h-[420px] flex flex-col justify-center border-t border-emerald-400/20">
+              <!-- Decorative elements -->
+              <div
+                class="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-400/5 rounded-full -mr-48 -mt-48 blur-[80px]">
+              </div>
+              <div class="absolute bottom-0 left-0 w-80 h-80 bg-black/20 rounded-full -ml-40 -mb-40 blur-[40px]"></div>
+
+              <!-- Subtle Line pattern -->
+              <svg class="absolute inset-0 w-full h-full opacity-5" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 80 Q 25 70, 50 80 T 100 80" stroke="white" stroke-width="0.5" fill="none" />
+                <path d="M0 85 Q 25 75, 50 85 T 100 85" stroke="white" stroke-width="0.5" fill="none" />
+              </svg>
+
+              <div class="relative z-10 space-y-12">
+                <div class="flex items-center justify-between">
+                  <div class="px-5 py-2 bg-emerald-950/40 rounded-2xl border border-emerald-400/10 backdrop-blur-md">
+                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400/80">Liquidity Index</p>
+                  </div>
+                  <i class="fas fa-microchip text-emerald-500/40 text-2xl"></i>
+                </div>
+
+                <div class="space-y-4">
+                  <p class="text-xs font-bold text-emerald-500/60 uppercase tracking-widest ml-1">Current Card Balance
+                  </p>
+                  <div class="flex items-baseline gap-4">
+                    <p id="currentBalance"
+                      class="text-8xl lg:text-9xl font-black tracking-tighter text-white drop-shadow-2xl">--</p>
+                    <p class="text-2xl font-bold text-emerald-500 opacity-60 flex flex-col leading-none">
+                      <span>RWF</span>
+                      <span class="text-[10px] tracking-widest">CURRENCY</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="pt-8 flex items-center gap-6">
+                  <div
+                    class="flex items-center gap-3 bg-white/5 py-2 px-4 rounded-xl backdrop-blur-md border border-white/5">
+                    <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                    <span id="lastUpdate" class="text-[10px] font-black text-emerald-100/50 uppercase">Waiting...</span>
+                  </div>
+                  <div class="h-4 w-px bg-emerald-500/20"></div>
+                  <p class="text-[10px] font-black text-emerald-500/40 uppercase tracking-widest">ENCRYPTED VAULT AC-01
+                  </p>
+                </div>
+              </div>
+
+              <!-- NFC Icon Decor -->
+              <div class="absolute top-12 right-12 opacity-10 scale-150 rotate-12">
+                <i class="fas fa-wifi text-6xl"></i>
+              </div>
+            </div>
+
+            <!-- Recharge Form -->
+            <div class="glass p-10 rounded-[40px] shadow-2xl border border-emerald-900/50">
+              <div class="flex items-center gap-4 mb-8">
+                <div
+                  class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-emerald-950 shadow-lg">
+                  <i class="fas fa-bolt-lightning"></i>
+                </div>
+                <h3 class="font-black text-xl text-white">Instant Refill</h3>
+              </div>
+              <form id="topupForm" class="flex flex-col md:flex-row gap-5">
+                <div class="flex-grow">
+                  <label
+                    class="text-[10px] font-black text-emerald-500/50 uppercase tracking-widest mb-2 block ml-1">Card
+                    Serial</label>
+                  <input type="text" id="uid" required placeholder="XXXX-XXXX"
+                    class="w-full px-6 py-4 bg-emerald-950/50 border border-emerald-800/50 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 outline-none transition font-mono font-black text-emerald-100 placeholder:opacity-20 uppercase">
+                </div>
+                <div class="md:w-56">
+                  <label
+                    class="text-[10px] font-black text-emerald-500/50 uppercase tracking-widest mb-2 block ml-1">Refill
+                    Value</label>
+                  <input type="number" id="amount" required placeholder="0.00"
+                    class="w-full px-6 py-4 bg-emerald-950/50 border border-emerald-800/50 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 outline-none transition font-black text-white placeholder:opacity-20">
+                </div>
+                <div class="flex items-end">
+                  <button type="submit"
+                    class="w-full md:w-auto bg-emerald-500 text-emerald-950 px-10 py-4 rounded-2xll font-black hover:scale-105 active:scale-95 transition-all shadow-xl shadow-emerald-500/20 rounded-2xl mb-[1px]">
+                    Transfer
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Activity Stream -->
+          <div class="glass flex flex-col rounded-[48px] p-10 shadow-2xl border border-emerald-900/50">
+            <div class="flex items-center justify-between mb-10">
+              <h3 class="font-black text-xl text-white">Wave Activity</h3>
+              <div class="flex items-center gap-2">
+                <span id="conn-status" class="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Live
+                  Feed</span>
+                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]"></span>
+              </div>
+            </div>
+
+            <div id="updates" class="space-y-4 flex-grow overflow-y-auto pr-2 custom-scrollbar max-h-[600px]">
+              <div class="text-center py-24 opacity-20">
+                <i class="fas fa-signature text-5xl mb-6"></i>
+                <p class="text-xs font-black tracking-widest">AWAITING TRANSACTIONS</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <footer class="pt-20 pb-12 text-center">
+          <p class="text-[10px] font-black text-emerald-500/10 uppercase tracking-[0.8em]">SECURED BY EMERALD PROTOCOL
+            &bull; TEAM THE ROCK &bull; MMXXVI</p>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // === CONFIG ===
+    const BACKEND_URL = "http://157.173.101.159:9242";
+    const WS_URL = BACKEND_URL.replace(/^http/, 'ws');
+
+    // WebSocket logic
+    const ws = new WebSocket(WS_URL);
+    const updatesDiv = document.getElementById('updates');
+    const currentBalanceEl = document.getElementById('currentBalance');
+    const currentUidEl = document.getElementById('currentUid');
+    const lastUpdateEl = document.getElementById('lastUpdate');
+    const feedback = document.getElementById('feedback');
+
+    ws.onmessage = (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        if (msg.message && msg.message.includes('Connected')) return;
+
+        const topic = msg.topic.split('/').pop();
+        const data = msg.data || msg.payload;
+
+        let displayText = '';
+        let balanceValue = null;
+        let uidValue = data.uid || 'unknown';
+
+        if (topic.includes('status')) {
+          balanceValue = data.balance;
+          displayText = `<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500"><i class="fas fa-id-card"></i></div><div><p class="text-xs font-bold text-white">${uidValue}</p><p class="text-[10px] text-emerald-500/50 font-black uppercase">Identity Verified</p></div></div>`;
+        } else if (topic.includes('balance')) {
+          balanceValue = data.new_balance;
+          displayText = `<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500"><i class="fas fa-coins"></i></div><div><p class="text-xs font-bold text-white">${balanceValue} RWF</p><p class="text-[10px] text-yellow-500/50 font-black uppercase">Liquidity Refilled</p></div></div>`;
+        }
+
+        if (balanceValue !== null) {
+          currentBalanceEl.textContent = balanceValue.toLocaleString();
+          currentUidEl.textContent = uidValue;
+          lastUpdateEl.textContent = new Date().toLocaleTimeString();
+        }
+
+        const entry = document.createElement('div');
+        entry.className = 'bg-white/5 p-5 rounded-3xl border border-white/5 animate-fade-in flex flex-col gap-4';
+        entry.innerHTML = `<div>${displayText}</div><p class="text-[9px] text-emerald-500/30 font-black uppercase tracking-tighter">${new Date().toLocaleTimeString()} &bull; REMOTE_EDGE_SYNC</p>`;
+        updatesDiv.prepend(entry);
+        updatesDiv.scrollTop = 0;
+
+      } catch (e) { console.error('WS error:', e); }
+    };
+
+    // Form logic
+    document.getElementById('topupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const uid = document.getElementById('uid').value.trim().toUpperCase();
+      const amount = parseInt(document.getElementById('amount').value);
+      if (!uid || isNaN(amount) || amount <= 0) return showFeedback('Invalid Parameters', 'error');
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/topup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ uid, amount })
+        });
+        if (res.ok) {
+          showFeedback(`Authorized: ${amount} RWF Transfer initiated`, 'success');
+          document.getElementById('topupForm').reset();
+        } else {
+          showFeedback('Transaction Rejected', 'error');
+        }
+      } catch (err) { showFeedback('Connection Offline', 'error'); }
+    });
+
+    function showFeedback(text, type = 'success') {
+      feedback.textContent = text;
+      feedback.className = `px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest animate-fade-in ${type === 'success' ? 'bg-emerald-500 text-emerald-950' : 'bg-rose-500 text-white'
+        }`;
+      feedback.classList.remove('hidden');
+      setTimeout(() => feedback.classList.add('hidden'), 5000);
+    }
+  </script>
+
+  <style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</body>
+
+</html>

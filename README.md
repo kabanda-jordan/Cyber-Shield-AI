@@ -3,7 +3,7 @@
 This project is a high-performance RFID card top-up ecosystem. It features a NodeMCU Emerald Hub (Edge), a Remote Node.js API Bridge, and a real-time Web Dashboard.
 
 ## 🚀 Live Production URL
-**Dashboard:** [http://157.173.101.159:9242/wallet.html](http://157.173.101.159:9259/wallet.html)
+**Dashboard:** [http://157.173.101.159:9242/wallet.html](http://157.173.101.159:9242/wallet.html)
 
 ## System Architecture
 
